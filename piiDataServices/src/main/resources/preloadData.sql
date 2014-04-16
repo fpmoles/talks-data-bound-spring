@@ -1,0 +1,6 @@
+delete from EMAIL_ADDRESS where PERSON_ID = '8824b797-2b05-4166-8b79-3cd479d7ba29';
+delete from ADDRESS where PERSON_ID = '8824b797-2b05-4166-8b79-3cd479d7ba29';
+delete from PHONE_NUMBER where PERSON_ID = '8824b797-2b05-4166-8b79-3cd479d7ba29';
+delete from PERSON where PERSON_ID = '8824b797-2b05-4166-8b79-3cd479d7ba29';
+
+insert into PERSON (PERSON_ID, PREFIX, FIRST_NAME, MIDDLE_NAME, LAST_NAME, SUFFIX) values ('8824b797-2b05-4166-8b79-3cd479d7ba29', 'MR', 'John', 'Wayne', 'Doe', 'JR');
