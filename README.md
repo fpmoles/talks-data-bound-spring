@@ -32,7 +32,7 @@ and distribution of customer Personal Identifiable Information (PII) data.
 This system will provide data access services of PII data stored in an NoSQL data store. This project for this presentation does not perform the full design of the ultimate
 project for the MSIT program, as it is only being designed to provide the service framework. The data access is provided to replicate a real system for conceptual vision only.
 
-## Branch Explainations
+## Branch Explanations
 
 ### feature/jdbcTemplateExample
 This example is using hard coded SQL injected into a repository class that executes the SQL statements against an embedded database through JdbcTemplate. This is not technically
