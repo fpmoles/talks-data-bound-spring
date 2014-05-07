@@ -32,4 +32,18 @@ and distribution of customer Personal Identifiable Information (PII) data.
 This system will provide data access services of PII data stored in an NoSQL data store. This project for this presentation does not perform the full design of the ultimate
 project for the MSIT program, as it is only being designed to provide the service framework. The data access is provided to replicate a real system for conceptual vision only.
 
+## Branch Explainations
 
+### feature/jdbcTemplateExample
+This example is using hard coded SQL injected into a repository class that executes the SQL statements against an embedded database through JdbcTemplate. This is not technically
+ part of Spring Data but is used to show what Spring Data is replacing.
+
+### feature/spring-data-jpa
+This example is using spring-data-jpa with a Hibernate implementation to abstract the repository. Of note is the reduction of code in the repository class as well as the fact
+that had the initial jdbc repository used Spring Data naming structures, no changes would have been needed in the data manager class.
+
+### feature/spring-data-mongo
+This example is using spring-data-mongodb to access a NoSql database for data access. Of note is the inability to preload a test database instance from the configuration like we
+ can with the embedded RDBMS in the previous two examples. Also of note is that the manager had no changes when moving from JPA to NoSQL because of the common Repository interface.
+
+ **Please note to run the tests on this example, MongoDB must be running locally on the default port**
