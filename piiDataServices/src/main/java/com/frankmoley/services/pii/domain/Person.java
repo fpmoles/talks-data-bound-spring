@@ -9,7 +9,7 @@ import org.springframework.hateoas.ResourceSupport;
  * @author Frank Moley
  */
 @XmlRootElement
-public class Person extends ResourceSupport{
+public class Person extends ResourceSupport {
     private String personId;
     private String prefix;
     private String firstName;

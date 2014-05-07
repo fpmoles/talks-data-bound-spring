@@ -2,33 +2,25 @@ package com.frankmoley.services.pii.data.entity;
 
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author Frank Moley
  */
-@Entity(name = "PERSON")
+@Document(collection = "PERSON")
 public class PersonEntity {
 
     @Id
-    @Column(name = "PERSON_ID")
     private String id;
-    @Column(name="PREFIX")
     private String prefix;
-    @Column(name="FIRST_NAME")
     private String firstName;
-    @Column(name = "MIDDLE_NAME")
     private String middleName;
-    @Column(name="LAST_NAME")
     private String lastName;
-    @Column(name="SUFFIX")
     private String suffix;
 
     public PersonEntity(){
         super();
-        //becaue I want to do pure JPA, I need to generate the id here instead of using the Hibernate generator
         if(null==id){
             this.id = UUID.randomUUID().toString();
         }

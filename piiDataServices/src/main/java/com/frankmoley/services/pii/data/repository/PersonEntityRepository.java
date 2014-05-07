@@ -1,8 +1,7 @@
 package com.frankmoley.services.pii.data.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.frankmoley.services.pii.data.entity.PersonEntity;
 
@@ -10,8 +9,7 @@ import com.frankmoley.services.pii.data.entity.PersonEntity;
  * @author Frank Moley
  */
 @Repository
-@Transactional
-public interface PersonEntityRepository extends CrudRepository<PersonEntity, String> {
+public interface PersonEntityRepository extends MongoRepository<PersonEntity, String> {
     //marker interface for now
 
 }

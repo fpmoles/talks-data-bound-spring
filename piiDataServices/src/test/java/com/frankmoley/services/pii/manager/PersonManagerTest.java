@@ -1,9 +1,7 @@
 package com.frankmoley.services.pii.manager;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -12,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -87,9 +83,9 @@ public class PersonManagerTest {
         verify(this.personEntityRepository, times(1)).delete(personId);
     }
 
-    private PersonEntity getMockPersonEntity(String personId){
+    private PersonEntity getMockPersonEntity(String personId) {
         PersonEntity person = new PersonEntity();
-        person.setId(null==personId? UUID.randomUUID().toString():personId);
+        person.setId(null == personId ? UUID.randomUUID().toString() : personId);
         person.setFirstName("Mockito");
         person.setMiddleName("Testing");
         person.setLastName("Mock");
@@ -98,9 +94,9 @@ public class PersonManagerTest {
         return person;
     }
 
-    private Person getMockPerson(String personId){
+    private Person getMockPerson(String personId) {
         Person person = new Person();
-        person.setPersonId(null==personId? UUID.randomUUID().toString():personId);
+        person.setPersonId(null == personId ? UUID.randomUUID().toString() : personId);
         person.setFirstName("Mockito");
         person.setMiddleName("Testing");
         person.setLastName("Mock");

@@ -41,7 +41,7 @@ public class PersonController {
     public HttpEntity<Person> addPerson(@RequestBody Person model) {
         Person person = this.personManager.addPerson(model);
         person.add(linkTo(methodOn(PersonController.class).getPerson(person.getPersonId())).withSelfRel());
-        ResponseEntity entity =  new ResponseEntity<Person>(person, HttpStatus.CREATED);
+        ResponseEntity entity = new ResponseEntity<Person>(person, HttpStatus.CREATED);
         entity.getHeaders().add("Location", linkTo(methodOn(PersonController.class).getPerson(person.getPersonId())).toString());
         return entity;
     }
