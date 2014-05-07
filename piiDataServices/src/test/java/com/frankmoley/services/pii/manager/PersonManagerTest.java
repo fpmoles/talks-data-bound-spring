@@ -41,7 +41,7 @@ public class PersonManagerTest {
 
         PersonEntity mockEntity = this.getMockPersonEntity(null);
         String personId = mockEntity.getId();
-        when(this.personEntityRepository.getPerson(personId)).thenReturn(mockEntity);
+        when(this.personEntityRepository.findOne(personId)).thenReturn(mockEntity);
 
         Person person = this.personManager.getPerson(personId);
         assertEquals("MR", person.getPrefix());
@@ -53,7 +53,7 @@ public class PersonManagerTest {
         List<PersonEntity> persons = new ArrayList<>();
         persons.add(this.getMockPersonEntity(null));
         persons.add(this.getMockPersonEntity(null));
-        when(this.personEntityRepository.getAll()).thenReturn(persons);
+        when(this.personEntityRepository.findAll()).thenReturn(persons);
         List<Person> people = this.personManager.getAllPersons();
         assertEquals(2, people.size());
     }
@@ -63,7 +63,7 @@ public class PersonManagerTest {
         Person personModel = this.getMockPerson(null);
         personModel.setPersonId(null);
         PersonEntity personEntity = this.getMockPersonEntity(null);
-        when(this.personEntityRepository.addPerson(any(PersonEntity.class))).thenReturn(personEntity);
+        when(this.personEntityRepository.save(any(PersonEntity.class))).thenReturn(personEntity);
 
         Person person = this.personManager.addPerson(personModel);
         assertEquals(personEntity.getId(), person.getPersonId());
@@ -74,7 +74,7 @@ public class PersonManagerTest {
         Person personModel = this.getMockPerson(null);
         String personId = personModel.getPersonId();
         PersonEntity personEntity = this.getMockPersonEntity(personId);
-        when(this.personEntityRepository.updatePerson(eq(personId), any(PersonEntity.class))).thenReturn(personEntity);
+        when(this.personEntityRepository.save(any(PersonEntity.class))).thenReturn(personEntity);
 
         Person person = this.personManager.updatePerson(personId, personModel);
         assertEquals(personEntity.getPrefix(), person.getPrefix());
@@ -84,7 +84,7 @@ public class PersonManagerTest {
     public void testDeletePerson() throws Exception {
         String personId = UUID.randomUUID().toString();
         this.personManager.deletePerson(personId);
-        verify(this.personEntityRepository, times(1)).deletePerson(personId);
+        verify(this.personEntityRepository, times(1)).delete(personId);
     }
 
     private PersonEntity getMockPersonEntity(String personId){

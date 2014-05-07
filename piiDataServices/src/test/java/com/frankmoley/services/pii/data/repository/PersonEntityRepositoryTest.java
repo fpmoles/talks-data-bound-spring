@@ -40,36 +40,41 @@ public class PersonEntityRepositoryTest {
         entity.setMiddleName("Appleseed");
         entity.setLastName("Junit");
         entity.setSuffix("IV");
-        entity = this.repository.addPerson(entity);
+        entity = this.repository.save(entity);
         assertNotNull(entity.getId());
     }
 
     @Test
     public void testGetPerson() throws Exception {
-        PersonEntity entity = this.repository.getPerson(person1Id);
+        PersonEntity entity = this.repository.findOne(person1Id);
         assertEquals("MR", entity.getPrefix());
     }
 
     @Test
     public void testUpdatePerson() throws Exception {
-        PersonEntity entity = this.repository.getPerson(person2Id);
+        PersonEntity entity = this.repository.findOne(person2Id);
         assertEquals("MRS", entity.getPrefix());
         entity.setPrefix("MR");
-        entity = this.repository.updatePerson(person2Id, entity);
+        entity = this.repository.save(entity);
         assertEquals("MR", entity.getPrefix());
     }
 
-    @Test(expected = EmptyResultDataAccessException.class)
+    @Test
     public void testDeletePerson() throws Exception {
-        PersonEntity entity = this.repository.getPerson(person3Id);
+        PersonEntity entity = this.repository.findOne(person3Id);
         assertNotNull(entity);
-        this.repository.deletePerson(person3Id);
-        entity = this.repository.getPerson(person3Id);
+        this.repository.delete(person3Id);
+        entity = this.repository.findOne(person3Id);
+        assertNull(entity);
     }
 
     @Test
     public void testGetAll() throws Exception {
-        List<PersonEntity> entities = this.repository.getAll();
-        assertEquals(3, entities.size());
+        Iterable<PersonEntity> entities = this.repository.findAll();
+        int counter = 0;
+        for(PersonEntity entity:entities){
+            counter++;
+        }
+        assertEquals(3, counter);
     }
 }

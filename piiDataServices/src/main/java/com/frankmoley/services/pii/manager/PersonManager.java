@@ -3,6 +3,7 @@ package com.frankmoley.services.pii.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class PersonManager {
     private PersonEntityRepository personEntityRepository;
 
     public Person getPerson(String personId){
-        PersonEntity entity = this.personEntityRepository.getPerson(personId);
+        PersonEntity entity = this.personEntityRepository.findOne(personId);
         if(null != entity){
             return this.translatePersonEntityToPerson(entity);
         }
@@ -29,9 +30,9 @@ public class PersonManager {
     }
 
     public List<Person> getAllPersons(){
-        List<PersonEntity> entities = this.personEntityRepository.getAll();
+        Iterable<PersonEntity> entities = this.personEntityRepository.findAll();
         if(null!=entities){
-            List<Person> persons = new ArrayList<>(entities.size());
+            List<Person> persons = new ArrayList<>();
             for(PersonEntity entity:entities){
                 persons.add(this.translatePersonEntityToPerson(entity));
             }
@@ -42,7 +43,7 @@ public class PersonManager {
 
     public Person addPerson(Person model){
         PersonEntity entity = this.translatePersonToPersonEntity(model);
-        entity = this.personEntityRepository.addPerson(entity);
+        entity = this.personEntityRepository.save(entity);
         if(null != entity) {
             return this.translatePersonEntityToPerson(entity);
         }
@@ -50,8 +51,12 @@ public class PersonManager {
     }
 
     public Person updatePerson(String personId, Person model){
+        if(StringUtils.isBlank(personId) || !personId.equals(model.getPersonId())){
+            throw new IllegalArgumentException("PersonId and model.personId mismatch");
+        }
+
         PersonEntity entity = this.translatePersonToPersonEntity(model);
-        entity = this.personEntityRepository.updatePerson(personId, entity);
+        entity = this.personEntityRepository.save(entity);
         if(null!=entity){
             return this.translatePersonEntityToPerson(entity);
         }
@@ -59,7 +64,7 @@ public class PersonManager {
     }
 
     public void deletePerson(String personId){
-        this.personEntityRepository.deletePerson(personId);
+        this.personEntityRepository.delete(personId);
     }
 
 

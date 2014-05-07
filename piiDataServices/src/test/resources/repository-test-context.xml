@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd     http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
 
     <context:property-placeholder location="classpath*:/piiDataServices.properties"/>
+
+    <jpa:repositories base-package="com.frankmoley.services.pii.data.repository"/>
 
     <jdbc:embedded-database id="piiDataSource" type="H2">
         <jdbc:script location="${db.ddl.location}"/>
         <jdbc:script location="classpath*:/testData.sql"/>
     </jdbc:embedded-database>
 
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <constructor-arg name="dataSource" ref="piiDataSource"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <bean id="piiRepository" class="com.frankmoley.services.pii.data.repository.PiiRepository" abstract="true">
-        <constructor-arg name="dataSource" ref="piiDataSource"/>
-    </bean>
-
-    <bean id="personRepository" class="com.frankmoley.services.pii.data.repository.PersonEntityRepository" parent="piiRepository">
-        <constructor-arg name="sqlProperties">
-            <util:properties location="classpath:/com.frankmoley.services.pii.data.repository/person.properties"/>
-        </constructor-arg>
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="piiDataSource"/>
+        <property name="packagesToScan" value="com.frankmoley.services.pii.data.entity"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
     </bean>
 
 </beans>
