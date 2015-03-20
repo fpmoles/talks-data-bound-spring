@@ -6,7 +6,7 @@ Presented by Frank P Moley III
 
 Twitter: @fpmoles
 
-Web: www.frankmoley.com
+Video: http://www.infoq.com/presentations/spring-data-rdbms-nosql
 
 ## Structure ##
 
